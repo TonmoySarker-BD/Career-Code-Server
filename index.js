@@ -24,6 +24,21 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
+
+    const jobsCollection = client.db("career-code").collection("jobs");
+
+    // API endpoint to get all jobs
+    app.get('/jobs', async (req, res) => {
+      const query = {};
+      const cursor = jobsCollection.find(query);
+      const jobs = await cursor.toArray();
+      res.send(jobs);
+    });
+
+
+
+
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
